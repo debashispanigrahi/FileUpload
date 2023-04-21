@@ -12,11 +12,13 @@ namespace FileUploadAPI.Controllers
     [ApiController]
     public class UploadController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost, DisableRequestSizeLimit]
+        [RequestSizeLimit(int.MaxValue)]
         public IActionResult FileUpload(InputModel inputModel)
         {
             try
             {
+                //52428800
                 var uploadModel = JsonConvert.DeserializeObject<UploadModel>(inputModel.FileData);
                 Uploading(uploadModel);
                 return Ok("Uploaded");
